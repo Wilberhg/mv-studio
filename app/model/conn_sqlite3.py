@@ -7,13 +7,12 @@ import os
 
 class Database:
 
-    def __init__(self, server: str, database: str) -> None:
-        self.server = server
+    def __init__(self, database: str) -> None:
         self.database = database
 
     @contextmanager
     def _open_db_connection(self, db_pathfile: str = os.getcwd(), commit: bool = None) -> sqlite3.Cursor:
-        connection = sqlite3.connect(db_pathfile)
+        connection = sqlite3.connect(f"{db_pathfile}\\{self.database}")
         cursor = connection.cursor()
         try:
             yield cursor
@@ -52,6 +51,6 @@ class Database:
                 else:
                     cursor.execute(query)
             return True
-        except:
+        except BaseException as err:
             return False
 
