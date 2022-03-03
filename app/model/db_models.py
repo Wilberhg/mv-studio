@@ -3,7 +3,8 @@ from datetime import datetime
 from xml.dom.minidom import CharacterData
 from peewee import (
     SqliteDatabase, 
-    Model, 
+    Model,
+    AutoField,
     CharField, 
     IntegerField, 
     FloatField, 
@@ -23,6 +24,7 @@ class BaseModel(Model):
         database = db
 
 class Produtos(BaseModel):
+    id = AutoField(column_name='ID')
     nome = CharField(column_name='Nome')
     descricao = CharField(column_name='descricao', null=True)
     preco = FloatField(column_name='Preco')
@@ -32,6 +34,7 @@ class Produtos(BaseModel):
         table_name = 'TB_Produtos'
 
 class Vendas(BaseModel):
+    id = AutoField(column_name='ID')
     nome_cliente = CharField(column_name='NomeCliente')
     produto = CharField(column_name='Produto')
     qtde = IntegerField(column_name='Qtde')
@@ -69,6 +72,7 @@ class Mensalidades(BaseModel):
         table_name = 'TB_Mensalidades'
 
 class Agendas(BaseModel):
+    id = AutoField(column_name='ID')
     cpf = ForeignKeyField(column_name='CPF', field='cpf', model=Clientes)
     modalidade = CharField(column_name='Modalidade')
     dias = CharField(column_name="Dias")
